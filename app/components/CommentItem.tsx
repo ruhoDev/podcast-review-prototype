@@ -80,7 +80,7 @@ export default function CommentItem({ comment, onEdit, onDelete, onSeek }: Comme
           </div>
         </div>
       ) : (
-        <p className="text-gray-700">{comment.text}</p>
+        <pre className="text-gray-700 whitespace-pre-wrap font-sans">{comment.text}</pre>
       )}
     </div>
   );
