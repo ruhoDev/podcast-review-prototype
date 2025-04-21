@@ -15,9 +15,9 @@ export default function CommentList({ comments, onEdit, onDelete, onSeek }: Comm
   const sortedComments = [...comments].sort((a, b) => a.timestamp - b.timestamp);
   
   return (
-    <div className="max-h-[500px] overflow-y-auto pr-2">
+    <div className="max-h-[300px] sm:max-h-[400px] md:max-h-[500px] overflow-y-auto pr-1 sm:pr-2">
       {sortedComments.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-4 sm:py-8 text-gray-500 text-sm sm:text-base">
           No comments yet. Pause the video and add a comment.
         </div>
       ) : (

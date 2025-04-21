@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['sample-videos.com'],
+    domains: ['enabled-content-creation-toolkit-bucket.nyc3.cdn.digitaloceanspaces.com'],
   },
 };
 

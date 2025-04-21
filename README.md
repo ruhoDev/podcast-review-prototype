@@ -10,6 +10,7 @@ A prototype web application for podcast agencies that allows users to review aud
 - Edit and delete comments
 - Click on comments to jump to their timestamp in the video
 - Comments are persisted using localStorage
+- Fully responsive design for mobile, tablet, and desktop
 
 ## Tech Stack
 
@@ -71,3 +72,13 @@ The development process focused on:
 4. Adding data persistence with localStorage
 5. Enhancing the UI for better user experience
 6. Testing and ensuring cross-browser compatibility
+
+### Mobile Responsiveness
+
+The application is fully responsive across different device sizes:
+
+- Adapts layout for mobile, tablet, and desktop screens
+- Responsive typography that scales with screen size
+- Touch-friendly buttons and controls
+- Optimized video player for mobile viewing
+- Stacked layout on smaller screens for better readability

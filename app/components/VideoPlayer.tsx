@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -24,12 +24,14 @@ export default function VideoPlayer({ videoUrl, onTimeUpdate, seekToTime }: Vide
   };
 
   return (
-    <div className="w-full bg-gray-900 rounded-lg overflow-hidden">
+    <div className="w-full bg-gray-900 rounded-lg overflow-hidden shadow-md">
       <video
         ref={videoRef}
-        className="w-full"
+        className="w-full max-h-[80vh] object-contain"
         controls
         onTimeUpdate={handleTimeUpdate}
+        controlsList="nodownload"
+        playsInline
       >
         <source src={videoUrl} type="video/mp4" />
         Your browser does not support the video tag.
