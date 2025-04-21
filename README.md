@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Video Framer - Podcast Review Platform
+
+A prototype web application for podcast agencies that allows users to review audio/video content and leave timestamped feedback.
+
+## Features
+
+- Load and play MP4 audio/video files
+- Pause at any moment to add comments tied to specific timestamps
+- View all comments alongside the player with timestamps
+- Edit and delete comments
+- Click on comments to jump to their timestamp in the video
+- Comments are persisted using localStorage
+
+## Tech Stack
+
+- **Framework**: Next.js with TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: React hooks with custom hook for comments
+- **Storage**: localStorage for persistence
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Architecture & Thought Process
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Component Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The application is built with a component-based architecture:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **VideoPlayer**: Handles video playback and timestamp tracking
+- **CommentForm**: Allows users to add new comments at specific timestamps
+- **CommentItem**: Individual comment display with edit/delete functionality
+- **CommentList**: Renders all comments and handles sorting by timestamp
 
-## Learn More
+### State Management
 
-To learn more about Next.js, take a look at the following resources:
+- Custom `useComments` hook manages comment data and persistence
+- State is maintained locally with React's `useState` and persisted with `localStorage`
+- Component props for efficient data flow between related components
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tradeoffs & Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+With more time, the following improvements could be implemented:
 
-## Deploy on Vercel
+1. **Backend Integration**: Implement a proper backend for more robust data persistence
+2. **Firebase Integration**: As mentioned in bonus features, connect to Firebase for real-time updates
+3. **User Authentication**: Add user roles (Reviewer vs. Admin) for different permissions
+4. **File Upload**: Implement actual file upload functionality rather than using a sample URL
+5. **Playback Controls**: Add more sophisticated video controls and keyboard shortcuts
+6. **Mobile Optimization**: Enhance the responsive design for better mobile experience
+7. **Export Functionality**: Add ability to export feedback as JSON or CSV files
+8. **Comment Categories**: Allow categorizing comments (e.g., technical, content, etc.)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development Process
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The development process focused on:
+
+1. Setting up the Next.js project with TypeScript and Tailwind CSS
+2. Building core components with clear responsibilities
+3. Implementing the comment system with timestamp synchronization
+4. Adding data persistence with localStorage
+5. Enhancing the UI for better user experience
+6. Testing and ensuring cross-browser compatibility
