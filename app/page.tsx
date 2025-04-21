@@ -1,32 +1,26 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import VideoPlayer from './components/VideoPlayer';
 import CommentForm from './components/CommentForm';
 import CommentList from './components/CommentList';
 import ExportButton from './components/ExportButton';
 import ImportButton from './components/ImportButton';
-import { useComments } from './hooks/useComments';
+import { useVideoState } from './store/hooks';
 
 // Sample video URL (can be replaced with upload functionality)
 const SAMPLE_VIDEO_URL = "https://enabled-content-creation-toolkit-bucket.nyc3.cdn.digitaloceanspaces.com/Into%20The%20Spotlight%20-%20My%20Expat%20Life%20-%20MicroPod%20Episode%202.mp4";
 
 export default function Home() {
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [seekToTime, setSeekToTime] = useState<number | null>(null);
-  const { comments, addComment, editComment, deleteComment, importComments } = useComments();
+  const {
+    currentTime,
+    setCurrentTime,
+    isPlaying,
+    setIsPlaying,
+    seekToTime,
+    handleSeek
+  } = useVideoState();
   
-  // Function to handle seeking to a specific timestamp
-  const handleSeek = (time: number) => {
-    setSeekToTime(time);
-    
-    // Reset the seek value after it's been consumed
-    setTimeout(() => {
-      setSeekToTime(null);
-    }, 100);
-  };
-
   // Function to detect if video is playing or paused
   useEffect(() => {
     const videoElement = document.querySelector('video');
@@ -45,7 +39,7 @@ export default function Home() {
         videoElement.removeEventListener('pause', handlePause);
       }
     };
-  }, []);
+  }, [setIsPlaying]);
 
   return (
     <main className="min-h-screen bg-gray-50 py-4 sm:py-6 md:py-8">
@@ -66,7 +60,6 @@ export default function Home() {
               <CommentForm 
                 isVideoPlaying={isPlaying} 
                 currentTime={currentTime} 
-                onAddComment={addComment} 
               />
             </div>
           </div>
@@ -78,16 +71,11 @@ export default function Home() {
                 <h2 className="text-lg sm:text-xl font-semibold">Comments</h2>
               </div>
               <div className="flex space-x-2">
-                <ImportButton onImport={importComments} />
-                <ExportButton comments={comments} />
+                <ImportButton />
+                <ExportButton />
               </div>
             </div>
-            <CommentList 
-              comments={comments} 
-              onEdit={editComment} 
-              onDelete={deleteComment} 
-              onSeek={handleSeek} 
-            />
+            <CommentList onSeek={handleSeek} />
           </div>
         </div>
       </div>

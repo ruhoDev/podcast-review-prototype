@@ -1,15 +1,16 @@
 "use client";
 
 import { useState, FormEvent } from 'react';
+import { useCommentActions } from '../store/hooks';
 
 interface CommentFormProps {
   isVideoPlaying: boolean;
   currentTime: number;
-  onAddComment: (text: string, timestamp: number) => void;
 }
 
-export default function CommentForm({ isVideoPlaying, currentTime, onAddComment }: CommentFormProps) {
+export default function CommentForm({ isVideoPlaying, currentTime }: CommentFormProps) {
   const [commentText, setCommentText] = useState('');
+  const { addComment } = useCommentActions();
 
   const formatTimestamp = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -20,7 +21,7 @@ export default function CommentForm({ isVideoPlaying, currentTime, onAddComment 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (commentText.trim()) {
-      onAddComment(commentText, currentTime);
+      addComment(commentText, currentTime);
       setCommentText('');
     }
   };

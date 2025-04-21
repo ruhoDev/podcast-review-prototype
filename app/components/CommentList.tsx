@@ -1,18 +1,15 @@
 "use client";
 
-import { Comment } from '../types';
+import { useSortedComments } from '../store/hooks';
 import CommentItem from './CommentItem';
 
 interface CommentListProps {
-  comments: Comment[];
-  onEdit: (id: string, text: string) => void;
-  onDelete: (id: string) => void;
   onSeek: (time: number) => void;
 }
 
-export default function CommentList({ comments, onEdit, onDelete, onSeek }: CommentListProps) {
-  // Sort comments by timestamp
-  const sortedComments = [...comments].sort((a, b) => a.timestamp - b.timestamp);
+export default function CommentList({ onSeek }: CommentListProps) {
+  // Get sorted comments from our custom hook
+  const sortedComments = useSortedComments();
   
   return (
     <div className="max-h-[300px] sm:max-h-[400px] md:max-h-[500px] overflow-y-auto pr-1 sm:pr-2">
@@ -25,8 +22,6 @@ export default function CommentList({ comments, onEdit, onDelete, onSeek }: Comm
           <CommentItem
             key={comment.id}
             comment={comment}
-            onEdit={onEdit}
-            onDelete={onDelete}
             onSeek={onSeek}
           />
         ))

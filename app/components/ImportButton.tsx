@@ -1,15 +1,13 @@
 "use client";
 
 import { useState, useRef } from 'react';
+import { useCommentActions } from '../store/hooks';
 import { Comment } from '../types';
 
-interface ImportButtonProps {
-  onImport: (comments: Comment[]) => void;
-}
-
-export default function ImportButton({ onImport }: ImportButtonProps) {
+export default function ImportButton() {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { importComments } = useCommentActions();
 
   // Validate that the data has the correct structure for comments
   const validateComments = (data: any[]): boolean => {
@@ -58,7 +56,7 @@ export default function ImportButton({ onImport }: ImportButtonProps) {
           createdAt: new Date(comment.createdAt)
         }));
         
-        onImport(commentsWithDates as Comment[]);
+        importComments(commentsWithDates as Comment[]);
         
         // Reset the input
         if (fileInputRef.current) fileInputRef.current.value = '';

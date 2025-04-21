@@ -1,12 +1,10 @@
 "use client";
 
-import { Comment } from '../types';
+import { useCommentActions } from '../store/hooks';
 
-interface ExportButtonProps {
-  comments: Comment[];
-}
-
-export default function ExportButton({ comments }: ExportButtonProps) {
+export default function ExportButton() {
+  const { comments } = useCommentActions();
+  
   const handleExport = () => {
     // Prepare comments for export (convert Date objects to ISO strings)
     const exportData = comments.map(comment => ({

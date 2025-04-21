@@ -8,17 +8,18 @@ A prototype web application for podcast agencies that allows users to review aud
 - Pause at any moment to add comments tied to specific timestamps
 - View all comments alongside the player with timestamps
 - Edit and delete comments
-- Click on comments to jump to their timestamp in the video
+- Click on comments to jump to that time in the player
 - Comments are persisted using localStorage
 - Fully responsive design for mobile, tablet, and desktop
 - Export comments as JSON for sharing or backup
 - Import comments from previously exported JSON files
+- Global state management with Jotai and custom hooks
 
 ## Tech Stack
 
 - **Framework**: Next.js with TypeScript
 - **Styling**: Tailwind CSS
-- **State Management**: React hooks with custom hook for comments
+- **State Management**: Jotai for global atomic state with custom React hooks
 - **Storage**: localStorage for persistence
 
 ## Getting Started
@@ -47,9 +48,21 @@ The application is built with a component-based architecture:
 
 ### State Management
 
-- Custom `useComments` hook manages comment data and persistence
-- State is maintained locally with React's `useState` and persisted with `localStorage`
-- Component props for efficient data flow between related components
+The application uses a combination of Jotai and custom hooks for state management:
+
+- **Jotai atoms**: Core state is managed with Jotai atoms for video playback and comments
+- **Custom hooks**: Business logic is encapsulated in custom hooks that provide clean interfaces
+- **Separation of concerns**: State is separated from actions for better organization
+- **Atomic updates**: Only components that depend on specific state pieces re-render
+- **Reduced boilerplate**: Simpler than Redux with less code
+- **Persistence**: Seamless integration with localStorage for offline data
+
+Key hooks include:
+- `useCommentActions`: Manages adding, editing, deleting and importing comments
+- `useVideoState`: Handles video playback state and seeking
+- `useSortedComments`: Provides comments sorted by timestamp
+
+This approach makes the codebase more maintainable, easier to test, and provides better performance through encapsulation and targeted re-rendering.
 
 ### Tradeoffs & Future Improvements
 

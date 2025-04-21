@@ -1,18 +1,19 @@
 "use client";
 
 import { useState } from 'react';
+import { useCommentActions } from '../store/hooks';
 import { Comment } from '../types';
 
 interface CommentItemProps {
   comment: Comment;
-  onEdit: (id: string, text: string) => void;
-  onDelete: (id: string) => void;
   onSeek: (time: number) => void;
 }
 
-export default function CommentItem({ comment, onEdit, onDelete, onSeek }: CommentItemProps) {
+export default function CommentItem({ comment, onSeek }: CommentItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(comment.text);
+  
+  const { editComment, deleteComment } = useCommentActions();
 
   const formatTimestamp = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -21,13 +22,17 @@ export default function CommentItem({ comment, onEdit, onDelete, onSeek }: Comme
   };
 
   const handleSaveEdit = () => {
-    onEdit(comment.id, editText);
+    editComment(comment.id, editText);
     setIsEditing(false);
   };
 
   const handleCancelEdit = () => {
     setEditText(comment.text);
     setIsEditing(false);
+  };
+
+  const handleDelete = () => {
+    deleteComment(comment.id);
   };
 
   return (
@@ -48,7 +53,7 @@ export default function CommentItem({ comment, onEdit, onDelete, onSeek }: Comme
             Edit
           </button>
           <button 
-            onClick={() => onDelete(comment.id)} 
+            onClick={handleDelete} 
             className="text-gray-500 hover:text-red-600 text-xs sm:text-sm"
           >
             Delete
