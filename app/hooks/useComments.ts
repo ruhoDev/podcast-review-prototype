@@ -58,10 +58,17 @@ export function useComments() {
     setComments(comments.filter(comment => comment.id !== id));
   };
 
+  // Import comments from JSON
+  const importComments = (importedComments: Comment[]) => {
+    // Replace all current comments with the imported ones
+    setComments(importedComments);
+  };
+
   return {
     comments,
     addComment,
     editComment,
-    deleteComment
+    deleteComment,
+    importComments
   };
 } 

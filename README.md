@@ -11,6 +11,8 @@ A prototype web application for podcast agencies that allows users to review aud
 - Click on comments to jump to their timestamp in the video
 - Comments are persisted using localStorage
 - Fully responsive design for mobile, tablet, and desktop
+- Export comments as JSON for sharing or backup
+- Import comments from previously exported JSON files
 
 ## Tech Stack
 
@@ -58,9 +60,6 @@ With more time, the following improvements could be implemented:
 3. **User Authentication**: Add user roles (Reviewer vs. Admin) for different permissions
 4. **File Upload**: Implement actual file upload functionality rather than using a sample URL
 5. **Playback Controls**: Add more sophisticated video controls and keyboard shortcuts
-6. **Mobile Optimization**: Enhance the responsive design for better mobile experience
-7. **Export Functionality**: Add ability to export feedback as JSON or CSV files
-8. **Comment Categories**: Allow categorizing comments (e.g., technical, content, etc.)
 
 ## Development Process
 

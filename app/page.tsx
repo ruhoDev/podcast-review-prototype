@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import VideoPlayer from './components/VideoPlayer';
 import CommentForm from './components/CommentForm';
 import CommentList from './components/CommentList';
+import ExportButton from './components/ExportButton';
+import ImportButton from './components/ImportButton';
 import { useComments } from './hooks/useComments';
 
 // Sample video URL (can be replaced with upload functionality)
@@ -13,7 +15,7 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [seekToTime, setSeekToTime] = useState<number | null>(null);
-  const { comments, addComment, editComment, deleteComment } = useComments();
+  const { comments, addComment, editComment, deleteComment, importComments } = useComments();
   
   // Function to handle seeking to a specific timestamp
   const handleSeek = (time: number) => {
@@ -71,7 +73,15 @@ export default function Home() {
           
           {/* Comments Column - Full width on mobile, 1/3 width on larger screens */}
           <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-200 shadow-sm">
-            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Comments</h2>
+            <div className="mb-3 sm:mb-4">
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-lg sm:text-xl font-semibold">Comments</h2>
+              </div>
+              <div className="flex space-x-2">
+                <ImportButton onImport={importComments} />
+                <ExportButton comments={comments} />
+              </div>
+            </div>
             <CommentList 
               comments={comments} 
               onEdit={editComment} 
