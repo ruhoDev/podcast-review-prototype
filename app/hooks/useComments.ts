@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Comment } from '../types';
+import { Comment, ParsedComment } from '../types';
 
 // Helper function to generate a unique ID
 const generateId = (): string => {
@@ -17,7 +17,7 @@ export function useComments() {
     if (savedComments) {
       try {
         // Parse the saved comments and convert string dates back to Date objects
-        const parsedComments = JSON.parse(savedComments).map((comment: any) => ({
+        const parsedComments = JSON.parse(savedComments).map((comment: ParsedComment) => ({
           ...comment,
           createdAt: new Date(comment.createdAt)
         }));
