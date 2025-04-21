@@ -1,6 +1,6 @@
 "use client";
 
-import { useSetAtom, useAtomValue, useAtom } from 'jotai';
+import { useAtomValue, useAtom } from 'jotai';
 import { commentsAtom, currentTimeAtom, isPlayingAtom, seekToTimeAtom, sortedCommentsAtom } from './atoms';
 import { Comment } from '../types';
 

@@ -1,25 +1,14 @@
 "use client";
 
 import { useState, useRef } from 'react';
+import { ZodError } from 'zod';
 import { useCommentActions } from '../store/hooks';
-import { Comment } from '../types';
+import { validateAndTransformComments } from '../schemas';
 
 export default function ImportButton() {
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { importComments } = useCommentActions();
-
-  // Validate that the data has the correct structure for comments
-  const validateComments = (data: any[]): boolean => {
-    return data.every(item => 
-      typeof item === 'object' &&
-      typeof item.id === 'string' &&
-      typeof item.text === 'string' &&
-      typeof item.timestamp === 'number' &&
-      typeof item.createdAt === 'string' && 
-      !isNaN(Date.parse(item.createdAt))
-    );
-  };
 
   const handleImport = () => {
     if (fileInputRef.current) {
@@ -38,31 +27,31 @@ export default function ImportButton() {
         const content = event.target?.result as string;
         const data = JSON.parse(content);
         
-        if (!Array.isArray(data)) {
-          setError("Invalid format: Expected an array of comments");
-          setTimeout(() => setError(null), 5000);
-          return;
-        }
+        // Validate and transform the data with Zod
+        const validComments = validateAndTransformComments(data);
         
-        if (!validateComments(data)) {
-          setError("Invalid format: Comments in the file are missing required fields");
-          setTimeout(() => setError(null), 5000);
-          return;
-        }
-        
-        // Convert string dates back to Date objects
-        const commentsWithDates = data.map(comment => ({
-          ...comment,
-          createdAt: new Date(comment.createdAt)
-        }));
-        
-        importComments(commentsWithDates as Comment[]);
+        // Import the validated comments
+        importComments(validComments);
         
         // Reset the input
         if (fileInputRef.current) fileInputRef.current.value = '';
         
       } catch (err) {
-        setError("Failed to parse JSON file");
+        if (err instanceof SyntaxError) {
+          // JSON parsing error
+          setError("Failed to parse JSON file");
+        } else if (err instanceof ZodError) {
+          // Zod validation error
+          const errorMessage = err.errors.map(e => 
+            `${e.path.join('.')}: ${e.message}`
+          ).join('; ');
+          setError(`Invalid format: ${errorMessage}`);
+        } else {
+          // Other error
+          setError(`Error: ${(err as Error).message}`);
+        }
+        
+        // Clear error after 5 seconds
         setTimeout(() => setError(null), 5000);
       }
     };
