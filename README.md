@@ -21,6 +21,34 @@ A prototype web application for podcast agencies that allows users to review aud
 - **Styling**: Tailwind CSS
 - **State Management**: Jotai for global atomic state with custom React hooks
 - **Storage**: localStorage for persistence
+- **Validation**: Zod for schema validation and data parsing
+
+## Project Structure
+
+```
+video-framer/
+├── app/                      # Next.js app directory
+│   ├── components/           # UI components
+│   │   ├── CommentForm.tsx   # Form for adding new comments
+│   │   ├── CommentItem.tsx   # Individual comment display
+│   │   ├── CommentList.tsx   # List of all comments
+│   │   ├── ExportButton.tsx  # Button to export comments as JSON
+│   │   ├── ImportButton.tsx  # Button to import comments from JSON
+│   │   └── VideoPlayer.tsx   # Video player component
+│   ├── store/                # State management
+│   │   ├── atoms.ts          # Jotai atoms for state
+│   │   └── hooks.ts          # Custom hooks for state operations
+│   ├── types.ts              # TypeScript interfaces
+│   ├── schemas.ts            # Zod validation schemas
+│   ├── globals.css           # Global styles
+│   ├── layout.tsx            # App layout component
+│   └── page.tsx              # Main page component
+├── public/                   # Static assets
+├── next.config.mjs           # Next.js configuration
+├── package.json              # NPM dependencies and scripts
+├── tailwind.config.js        # Tailwind CSS configuration
+└── tsconfig.json             # TypeScript configuration
+```
 
 ## Getting Started
 
@@ -94,3 +122,37 @@ The application is fully responsive across different device sizes:
 - Touch-friendly buttons and controls
 - Optimized video player for mobile viewing
 - Stacked layout on smaller screens for better readability
+
+### Future Improvements
+
+If I had more time to enhance this application, I would implement:
+
+- **Firebase Authentication** for secure user management
+- **Firestore Database Integration** with models for:
+  * Users
+  * Videos
+  * Comments
+- **Server Components** for optimized Comments CRUD operations
+
+### Architecture Decisions
+
+For this client-focused prototype, I carefully selected these technologies:
+
+* **Next.js with TypeScript and Tailwind CSS** - Providing type safety, component reusability, and responsive design
+* **Jotai for State Management** - Offering atomic state updates with custom React hooks
+* **Zod** - Ensuring runtime type safety and data validation
+* **localStorage** - Enabling client-side persistence without backend dependencies
+
+Jotai was specifically chosen for its:
+* Granular reactivity through atomic state management
+* Zero configuration with no context providers required
+* Seamless integration with browser storage solutions
+
+### Enhancement Roadmap
+
+1. **Video Library Integration** - Connect with Firebase to enable multiple video selection
+2. **Role-Based Access Control** - Implement admin and reviewer roles where:
+   - Admins can assign videos to specific reviewers
+   - Reviewers can add timestamped comments to their assigned videos
+3. **Visual Comment Enhancement** - Add screenshot capture functionality to comments
+4. **Social Sharing** - Enable comment sharing across social media platforms
